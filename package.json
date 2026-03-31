@@ -1,1 +1,44 @@
-{\n  "name": "your-project-name",\n  "version": "0.0.1",\n  "dependencies": {\n    "@nestjs/common": "^8.0.0",\n    "@nestjs/core": "^8.0.0",\n    "@nestjs/platform-express": "^8.0.0",\n    "@nestjs/microservices": "^8.0.0",\n    "@nestjs/typeorm": "^8.0.0",\n    "typeorm": "^0.2.0",\n    "reflect-metadata": "^0.1.0",\n    "rxjs": "^7.0.0",\n    "class-validator": "^0.13.0",\n    "class-transformer": "^0.4.0",\n    "passport": "^0.4.0",\n    "@nestjs/passport": "^8.0.0",\n    "jsonwebtoken": "^8.0.0"\n  },\n  "devDependencies": {\n    "@nestjs/schematics": "^8.0.0",\n    "@nestjs/testing": "^8.0.0",\n    "ts-jest": "^27.0.0",\n    "typescript": "^4.4.0"\n  },\n  "scripts": {\n    "start": "node dist/main.js",\n    "build": "tsc",\n    "test": "jest"\n  },\n  "jest": {\n    "transform": {\n      "^.+\\.(ts|tsx)$": "ts-jest"\n    },\n    "testRegex": "(\.|/)(spec|test)\\.ts$",\n    "moduleFileExtensions": ["ts", "js", "json", "node"]\n  }\n}
+{
+	"name": "qfx-finance.com",
+	"version": "0.0.1",
+	"dependencies": {
+		"@nestjs/common": "^8.0.0",
+		"@nestjs/core": "^8.0.0",
+		"@nestjs/microservices": "^8.0.0",
+		"@nestjs/passport": "^8.0.0",
+		"@nestjs/platform-express": "^8.0.0",
+		"@nestjs/typeorm": "^8.0.0",
+		"class-transformer": "^0.4.0",
+		"class-validator": "^0.13.0",
+		"jsonwebtoken": "^8.0.0",
+		"passport": "^0.4.0",
+		"reflect-metadata": "^0.1.0",
+		"rxjs": "^7.0.0",
+		"typeorm": "^0.2.0"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.21",
+		"@nestjs/schematics": "^8.0.0",
+		"@nestjs/testing": "^8.0.0",
+		"ts-jest": "^27.0.0",
+		"typescript": "^4.4.0"
+	},
+	"scripts": {
+		"build": "tsc",
+		"start": "node dist/main.js",
+		"start:prod": "node dist/main.js",
+		"test": "jest"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.(ts|tsx)$": "ts-jest"
+		},
+		"testRegex": "(\\.|/)(spec|test)\\.ts$",
+		"moduleFileExtensions": [
+			"ts",
+			"js",
+			"json",
+			"node"
+		]
+	}
+}

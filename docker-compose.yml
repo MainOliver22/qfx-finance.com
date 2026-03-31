@@ -1,10 +1,10 @@
-version: '3.8'
-
 services:
   app:
     image: nestjs-app
     build:
-      context: ./app
+      context: .
+    depends_on:
+      - db
     ports:
       - '3000:3000'
     environment:
@@ -15,7 +15,7 @@ services:
       - DATABASE_NAME=finance
 
   db:
-    image: postgres:latest
+    image: postgres:16
     ports:
       - '5432:5432'
     environment:
