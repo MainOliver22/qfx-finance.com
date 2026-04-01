@@ -4,22 +4,24 @@
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/platform-express": "^8.0.0",
     "@nestjs/microservices": "^8.0.0",
+    "@nestjs/passport": "^8.0.0",
+    "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.0",
     "@vercel/analytics": "^1.4.1",
-    "typeorm": "^0.2.0",
+    "class-transformer": "^0.4.0",
+    "class-validator": "^0.13.0",
+    "jsonwebtoken": "^8.0.0",
+    "passport": "^0.4.0",
     "reflect-metadata": "^0.1.0",
     "rxjs": "^7.0.0",
-    "class-validator": "^0.13.0",
-    "class-transformer": "^0.4.0",
-    "passport": "^0.4.0",
-    "@nestjs/passport": "^8.0.0",
-    "jsonwebtoken": "^8.0.0"
+    "typeorm": "^0.3.28"
   },
   "devDependencies": {
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "ts-jest": "^27.0.0",
     "typescript": "^4.4.0"
   },
@@ -33,6 +35,11 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testRegex": "(\\.|\\/)(spec|test)\\.ts$",
-    "moduleFileExtensions": ["ts", "js", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json",
+      "node"
+    ]
   }
 }

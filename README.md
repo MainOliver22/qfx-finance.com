@@ -35,4 +35,4 @@
 2. Deploy to your web server of choice (e.g., Vercel, Netlify).
 3. Monitor the application logs for performance and debugging.
 
-For detailed information, check the [documentation](link-to-your-docs).
+For detailed information, check the [documentation](docs/README.md).
