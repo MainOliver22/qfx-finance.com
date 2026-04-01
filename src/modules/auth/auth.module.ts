@@ -8,5 +8,6 @@ import { AdminGuard } from './admin.guard';
 @Module({
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, JwtGuard, AdminGuard],
+  exports: [JwtGuard, AdminGuard, AuthService],
 })
 export class AuthModule {}
