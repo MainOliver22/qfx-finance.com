@@ -7,13 +7,21 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { IsString, MinLength, MaxLength } from 'class-validator';
 import { AuthService, AuthUser } from './auth.service';
 import { AdminGuard } from './admin.guard';
 import { JwtGuard } from './jwt.guard';
 
-interface LoginDto {
-  username: string;
-  password: string;
+class LoginDto {
+  @IsString()
+  @MinLength(3)
+  @MaxLength(64)
+  username!: string;
+
+  @IsString()
+  @MinLength(8)
+  @MaxLength(128)
+  password!: string;
 }
 
 @Controller('auth')
