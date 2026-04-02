@@ -1,73 +1,64 @@
-# Vercel Web Analytics Integration
+# Vercel Analytics Integration
 
-This project has been configured with the `@vercel/analytics` package.
+This project includes a fully functional server-side analytics system powered by the `@vercel/analytics` package and a custom `AnalyticsModule`.
 
-## Important Notes
+## Features
 
-⚠️ **Note about Backend APIs**: This is a NestJS backend API project. Vercel Web Analytics is primarily designed for tracking page views and user interactions in **frontend applications** (React, Next.js, Vue, etc.).
+- **Automatic request tracking** – Every HTTP request is recorded by the `AnalyticsMiddleware` (method, path, status code, response time).
+- **Custom event tracking** – Use `AnalyticsService.trackEvent()` from any controller or service.
+- **Real-time summary endpoint** – `GET /analytics` returns aggregated metrics.
+- **In-memory storage** – The last 1 000 API calls and 1 000 custom events are retained per process.
 
-For backend API monitoring and observability, consider using:
-- [Vercel Observability](https://vercel.com/docs/observability) for production monitoring
-- [Vercel Speed Insights](https://vercel.com/docs/speed-insights) for performance tracking
-- Traditional APM tools (New Relic, Datadog, etc.) for API-specific metrics
+## Quick Start
 
-## Current Integration
+### 1. Install dependencies
 
-The `@vercel/analytics` package has been installed and a basic `AnalyticsService` has been created in `src/analytics/`. This service:
+```bash
+npm install
+```
 
-1. Provides a placeholder for custom event tracking
-2. Can be extended when you add a frontend to this project
-3. Includes logging for debugging purposes
+### 2. Build and run
 
-## When This Becomes Useful
+```bash
+npm run build
+npm start
+```
 
-This integration will be most beneficial when you:
+### 3. Query analytics
 
-1. **Add a Frontend**: If you later add a web frontend (React, Next.js, etc.) that connects to this API, you can use the standard Vercel Analytics integration in your frontend code.
+```bash
+curl http://localhost:3000/analytics
+```
 
-2. **Serve HTML Pages**: If your API serves any HTML pages, you can inject the Vercel Analytics script into those pages.
+The response includes:
 
-3. **Use Custom Events**: If you upgrade to a Vercel Pro or Enterprise plan, you can track custom events from your backend using the Analytics API.
+| Field                  | Description                                         |
+|------------------------|-----------------------------------------------------|
+| `totalRequests`        | Number of API calls recorded                        |
+| `totalEvents`          | Number of custom events recorded                    |
+| `averageResponseTimeMs`| Average response time across all recorded calls     |
+| `requestsByMethod`     | Breakdown by HTTP method (GET, POST, …)             |
+| `requestsByEndpoint`   | Breakdown by endpoint path                          |
+| `requestsByStatus`     | Breakdown by status code family (2xx, 4xx, 5xx)     |
+| `recentApiCalls`       | Last 20 API call records                            |
+| `recentEvents`         | Last 20 custom event records                        |
+| `uptimeSeconds`        | Seconds since the AnalyticsService was initialised  |
 
-## Example Frontend Integration
+## Deploying to Vercel
 
-If you add a Next.js frontend (App Router), you would add this to your `app/layout.tsx`:
+A `vercel.json` is included in the repository root. To deploy:
 
-\`\`\`tsx
-import { Analytics } from '@vercel/analytics/next';
+1. Install the Vercel CLI: `npm i -g vercel`
+2. Run `vercel` from the project root and follow the prompts.
+3. Enable **Web Analytics** in the Vercel Dashboard → your project → Analytics tab.
 
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  );
-}
-\`\`\`
-
-For React apps, you would add this to your root component:
-
-\`\`\`tsx
-import { Analytics } from '@vercel/analytics/react';
-
-export default function App() {
-  return (
-    <div>
-      {/* your app content */}
-      <Analytics />
-    </div>
-  );
-}
-\`\`\`
+For production, set the required environment variables (`JWT_SECRET`, etc.) in the Vercel project settings.
 
 ## Using the Analytics Service
 
-The `AnalyticsService` is available throughout your NestJS application. You can inject it into any controller or service:
+Inject `AnalyticsService` into any controller or service:
 
-\`\`\`typescript
+```typescript
 import { Injectable } from '@nestjs/common';
 import { AnalyticsService } from './analytics';
 
@@ -76,27 +67,20 @@ export class YourService {
   constructor(private readonly analyticsService: AnalyticsService) {}
 
   someMethod() {
-    // Track custom events
-    this.analyticsService.trackEvent('custom_event', { 
-      property: 'value' 
-    });
-    
-    // Track API calls
-    this.analyticsService.trackApiCall('/api/endpoint', 'GET', 200);
+    // Track a custom event
+    this.analyticsService.trackEvent('user_signup', { plan: 'pro' });
   }
 }
-\`\`\`
+```
 
-## Enabling Analytics in Vercel Dashboard
+## Architecture
 
-To enable Vercel Web Analytics:
-
-1. Go to your project in the Vercel Dashboard
-2. Navigate to the Analytics tab
-3. Click "Enable Web Analytics"
-4. Deploy your project to Vercel
-
-Once enabled, if you add frontend pages, analytics will automatically start tracking page views, referrers, and visitor demographics.
+```
+AnalyticsModule
+├── AnalyticsMiddleware  – intercepts every request (applied globally)
+├── AnalyticsService     – stores records & computes summaries
+└── AnalyticsController  – exposes GET /analytics
+```
 
 ## Resources
 
